@@ -1,0 +1,66 @@
+let ball, paddle, blocks;
+let lives, score, hiScore;
+let gameStart, gameOver;
+const colors = [
+    "#FF0000",
+    "#FFFF00",
+    "#00FF00",
+    "#00FFFF",
+    "#0000FF",
+    "#FF00FF"
+];
+
+function setup() {
+    createCanvas(420, 560);
+    gameStart = false;
+    gameOver = false;
+    lives = 1;
+    score = 0;
+    hiScore = 0;
+    
+    blocks = [];
+    
+    const paddleX = width / 2;
+    const paddleW = 100;
+    const paddleH = 15;
+    const paddleY = height - paddleH / 2 - 10;
+    // const paddleY = height - paddleH;
+    paddle = new Paddle(paddleX, paddleY, paddleW, paddleH);
+    
+    const ballR = 12;
+    const ballY = paddleY - paddleH / 2 - ballR;
+    ball = new Ball(paddleX, ballY, ballR);
+}
+
+function draw() {
+    background(0);
+    paddle.move();
+    paddle.display();
+    ball.move();
+    ball.display();
+}
+
+function keyPressed() {
+    if (keyCode === 32 && !gameStart && !gameOver) {
+        //start game
+        startGame();
+    }
+    if (!gameOver) {
+        if (keyCode === LEFT_ARROW || keyCode === 65) {
+            paddle.changeDirection(-1);
+        } else if (keyCode === RIGHT_ARROW || keyCode === 68) {
+            paddle.changeDirection(1);
+        }
+    }
+}
+
+function keyReleased() {
+    if (!gameOver) {
+        paddle.changeDirection(0);
+    }
+}
+
+function startGame() {
+    gameStart = true;
+    ball.launch();
+}
