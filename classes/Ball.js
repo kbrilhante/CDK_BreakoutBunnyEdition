@@ -69,7 +69,7 @@ class Ball {
         ) {
             const y = this.y - paddle.y;
             const x = this.x - paddle.x;
-            this.angle = PI// atan2(y, x);
+            this.angle = atan2(y, x);
             if (this.angle === 0) {
                 this.angle = radians(-1);
             } else if (this.angle === PI) {
