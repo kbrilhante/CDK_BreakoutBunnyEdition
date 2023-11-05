@@ -3,7 +3,7 @@ class Ball {
         this.x = x;
         this.y = y;
         this.radius = radius;
-        this.color = colors[3];
+        this.color = "orange";
         this.dx = 0;
         this.dy = 0;
         this.speed = 0;

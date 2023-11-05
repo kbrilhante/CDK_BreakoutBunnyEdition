@@ -4,7 +4,7 @@ class Paddle {
         this.y = y;
         this.w = width;
         this.h = height;
-        this.color = colors[0];
+        this.color = colors[lives - 1];
         this.speed = 6;
         this.dx = 0;
     }

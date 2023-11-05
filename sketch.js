@@ -31,6 +31,8 @@ function setup() {
     const ballR = 12;
     const ballY = paddleY - paddleH / 2 - ballR;
     ball = new Ball(paddleX, ballY, ballR);
+
+    buildBlocks();
 }
 
 function draw() {
@@ -39,6 +41,10 @@ function draw() {
     paddle.display();
     ball.move();
     ball.display();
+    for (let i = 0; i < blocks.length; i++) {
+        const block = blocks[i];
+        block.display();
+    }
 }
 
 function keyPressed() {
@@ -63,4 +69,23 @@ function keyReleased() {
 function startGame() {
     gameStart = true;
     ball.launch();
+}
+
+function buildBlocks() {
+    const columns = level + 1;
+    const rows = level + 2;
+    const w = 50;
+    const h = 30;
+    const gap = 40;
+    const rowWidth = columns * w + (columns - 1) * gap;
+    const offsetX = (w + width - rowWidth) / 2;
+    const offsetY = 100;
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < columns; j++) {
+            const x = (w + gap) * j + offsetX;
+            const y = (h + gap) * i + offsetY;
+            const block = new Block(x, y, w, h, colors[i % colors.length]);
+            blocks.push(block);
+        }
+    }
 }
