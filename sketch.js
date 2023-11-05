@@ -1,5 +1,5 @@
 let ball, paddle, blocks;
-let lives, score, hiScore;
+let lives, level, score, hiScore;
 let gameStart, gameOver;
 const colors = [
     "#FF0000",
@@ -15,6 +15,7 @@ function setup() {
     gameStart = false;
     gameOver = false;
     lives = 1;
+    level = 1;
     score = 0;
     hiScore = 0;
     

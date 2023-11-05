@@ -44,8 +44,13 @@ class Ball {
         const topWall = this.radius;
         const leftWall = this.radius;
         const rightWall = width - this.radius;
-        if (this.x <= leftWall || this.x >= rightWall) {
+        if (this.x <= leftWall) {
             this.dx *= -1;
+            this.x = this.radius;
+        }
+        if (this.x >= rightWall) {
+            this.dx *= -1;
+            this.x = width - this.radius;
         }
         if (this.y <= topWall) {
             this.dy *= -1;
