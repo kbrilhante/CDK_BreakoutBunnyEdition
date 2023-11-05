@@ -20,6 +20,9 @@ class Paddle {
         this.dx = this.speed * direction;
     }
     move() {
+        const leftWall = this.w / 2;
+        const rightWall = width - this.w / 2;
         this.x += this.dx;
+        this.x = constrain(this.x, leftWall, rightWall);
     }
 }
