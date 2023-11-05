@@ -20,13 +20,12 @@ class Ball {
     launch() {
         // this.dx = random([-1, 1]) * random(1, 4);
         // this.dy = -1;
-        this.angle = random(-135, -45);
+        this.angle = radians(random(-135, -45));
         this.speed = 4;
-        this.angleChange();
+        this.angleChanged();
     }
-    angleChange() {
-        const a = radians(this.angle);
-        const v = p5.Vector.fromAngle(a);
+    angleChanged() {
+        const v = p5.Vector.fromAngle(this.angle);
         v.mult(this.speed);
         this.dx = v.x;
         this.dy = v.y;
@@ -62,6 +61,16 @@ class Ball {
         const paddleL = paddle.x - paddle.w / 2;
         const paddleR = paddle.x + paddle.w / 2;
 
-        
+        if (
+            this.x + this.radius >= paddleL &&
+            this.x - this.radius <= paddleR &&
+            this.y + this.radius >= paddleT &&
+            this.y - this.radius <= paddleB
+        ) {
+            const y = this.y - paddle.y;
+            const x = this.x - paddle.x;
+            this.angle = atan2(y, x);
+            this.angleChanged();
+        }
     }
 }
