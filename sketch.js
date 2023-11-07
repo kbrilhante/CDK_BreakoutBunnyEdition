@@ -15,7 +15,7 @@ function setup() {
     gameStart = false;
     gameOver = false;
     lives = 1;
-    level = 6;
+    level = 1;
     score = 0;
     hiScore = 0;
     
