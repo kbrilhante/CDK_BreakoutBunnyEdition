@@ -38,6 +38,7 @@ class Ball {
             this.y += this.dy;
             this.checkWallCollision();
             this.checkPaddleCollision();
+            this.checkAllBlocksCollision();
         }
     }
     checkWallCollision() {
@@ -82,5 +83,52 @@ class Ball {
             }
             this.angleChanged();
         }
+    }
+    checkAllBlocksCollision() {
+        let collidedH = false;
+        let collidedV = false;
+        for (let i = blocks.length - 1; i >= 0; i--) {
+            let b = blocks[i];
+            const col = this.checkBlockCollision(b);
+            if (col) {
+                blocks.splice(i, 1);
+                if (
+                    (col >= PI * 0.25 && col <= PI * 0.75) ||
+                    (col >= PI * 1.25 && col <= PI * 1.75)
+                ) {
+                    collidedV = true;
+                } else {
+                    collidedH = true;
+                }
+            }
+        }
+        if (collidedV) {
+            this.dy *= -1;
+        } else if (collidedH) {
+            this.dx *= -1;
+        }
+    }
+    checkBlockCollision(block) {
+        const blockT = block.y - block.h / 2;
+        const blockB = block.y + block.h / 2;
+        const blockL = block.x - block.w / 2;
+        const blockR = block.x + block.w / 2;
+
+        if (
+            this.x + this.radius >= blockL &&
+            this.x - this.radius <= blockR &&
+            this.y + this.radius >= blockT &&
+            this.y - this.radius <= blockB
+        ) {
+            // if (this.x >= blockL && this.x <= blockR) {
+            //     return "v";
+            // }
+            // return "h";
+            const x = abs(this.x - block.x);
+            const y = abs(this.y - block.y);
+            const a = atan2(y, x);
+            return a;
+        }
+        return false;
     }
 }

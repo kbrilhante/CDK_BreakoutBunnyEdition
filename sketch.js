@@ -15,7 +15,7 @@ function setup() {
     gameStart = false;
     gameOver = false;
     lives = 1;
-    level = 1;
+    level = 6;
     score = 0;
     hiScore = 0;
     
@@ -74,10 +74,17 @@ function startGame() {
 function buildBlocks() {
     const columns = level + 1;
     const rows = level + 2;
-    const w = 50;
-    const h = 30;
-    const gap = 40;
-    const rowWidth = columns * w + (columns - 1) * gap;
+    let w = 60;
+    let h = w / 2;
+    let gap = 40 / level;
+    let blocksWidth = columns * w;
+    if (blocksWidth > width - gap * columns) {
+       gap = 0;
+       w = width / (columns + 1);
+       h = w / 2;
+       blocksWidth = columns * w;
+    }
+    const rowWidth = blocksWidth + (columns - 1) * gap;
     const offsetX = (w + width - rowWidth) / 2;
     const offsetY = 100;
     for (let i = 0; i < rows; i++) {
