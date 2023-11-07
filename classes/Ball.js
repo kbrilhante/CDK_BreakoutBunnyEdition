@@ -92,14 +92,20 @@ class Ball {
             const col = this.checkBlockCollision(b);
             if (col) {
                 blocks.splice(i, 1);
+                this.speed += 0.1;
+                const br = atan2(b.h / 2, b.w / 2);
+                const bl = PI - br;
+                const tl = PI + br;
+                const tr = -br;
                 if (
-                    (col >= PI * 0.25 && col <= PI * 0.75) ||
-                    (col >= PI * 1.25 && col <= PI * 1.75)
+                    (col >= br && col <= bl) ||
+                    (col >= tl && col <= tr)
                 ) {
                     collidedV = true;
                 } else {
                     collidedH = true;
                 }
+                // noLoop();
             }
         }
         if (collidedV) {
