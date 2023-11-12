@@ -32,7 +32,7 @@ class Ball {
     }
     move() {
         if (!gameStart) {
-            this.x = paddle.x;
+            this.x = game.paddle.x;
         } else {
             this.x += this.dx;
             this.y += this.dy;
@@ -57,15 +57,15 @@ class Ball {
             this.dy *= -1;
         }
         // TEMPORARY: just until we make it die
-        if (this.y >= height - this.radius) {
-            this.dy *= -1;
-        }
+        // if (this.y >= height - this.radius) {
+        //     this.dy *= -1;
+        // }
     }
     checkPaddleCollision() {
-        const paddleT = paddle.y - paddle.h / 2;
-        const paddleB = paddle.y + paddle.h / 2;
-        const paddleL = paddle.x - paddle.w / 2;
-        const paddleR = paddle.x + paddle.w / 2;
+        const paddleT = game.paddle.y - game.paddle.h / 2;
+        const paddleB = game.paddle.y + game.paddle.h / 2;
+        const paddleL = game.paddle.x - game.paddle.w / 2;
+        const paddleR = game.paddle.x + game.paddle.w / 2;
 
         if (
             this.x + this.radius >= paddleL &&
@@ -73,8 +73,8 @@ class Ball {
             this.y + this.radius >= paddleT &&
             this.y - this.radius <= paddleB
         ) {
-            const y = this.y - paddle.y;
-            const x = this.x - paddle.x;
+            const y = this.y - game.paddle.y;
+            const x = this.x - game.paddle.x;
             this.angle = atan2(y, x);
             if (this.angle === 0) {
                 this.angle = radians(-1);
@@ -87,11 +87,11 @@ class Ball {
     checkAllBlocksCollision() {
         let collidedH = false;
         let collidedV = false;
-        for (let i = blocks.length - 1; i >= 0; i--) {
-            let b = blocks[i];
+        for (let i = game.blocks.length - 1; i >= 0; i--) {
+            let b = game.blocks[i];
             const col = this.checkBlockCollision(b);
             if (col) {
-                blocks.splice(i, 1);
+                game.blocks.splice(i, 1);
                 this.speed += 0.1;
                 const br = atan2(b.h / 2, b.w / 2);
                 const bl = PI - br;
@@ -134,6 +134,12 @@ class Ball {
             const y = abs(this.y - block.y);
             const a = atan2(y, x);
             return a;
+        }
+        return false;
+    }
+    checkLost() {
+        if (this.y - this.radius > height) {
+            return true;
         }
         return false;
     }
