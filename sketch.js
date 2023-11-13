@@ -27,6 +27,9 @@ function keyPressed() {
     if (keyCode === 32 && !gameStart && !gameOver) {
         game.startGame();
     }
+    if (keyCode === 32 && gameOver) {
+        game.handleGameOver();
+    }
 }
 
 function keyReleased() {
