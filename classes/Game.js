@@ -71,10 +71,15 @@ class Game {
         }
         this.checkGameStatus();
         if (!gameOver) {
-            if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
-                this.paddle.changeDirection(-1);
-            } else if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) {
-                this.paddle.changeDirection(1);
+            if ((keyIsDown(RIGHT_ARROW) && keyIsDown(LEFT_ARROW)) || (keyIsDown(68) && keyIsDown(65))) {
+                this.paddle.changeDirection(0);
+            } else {
+                if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) {
+                    this.paddle.changeDirection(1);
+                }
+                if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
+                    this.paddle.changeDirection(-1);
+                }
             }
         }
     }
@@ -103,5 +108,8 @@ class Game {
             gameOver = true;
         }
         return gameOver;
+    }
+    drawStatus() {
+
     }
 }

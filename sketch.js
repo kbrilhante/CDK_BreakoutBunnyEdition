@@ -20,6 +20,7 @@ function setup() {
 function draw() {
     background(0);
     game.handleMovement();
+    game.drawStatus();
 }
 
 function keyPressed() {
