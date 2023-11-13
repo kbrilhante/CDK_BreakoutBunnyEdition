@@ -43,6 +43,7 @@ class Ball {
     }
     checkWallCollision() {
         const topWall = this.radius;
+        // const topWall = 100 + this.radius;
         const leftWall = this.radius;
         const rightWall = width - this.radius;
         if (this.x <= leftWall) {
