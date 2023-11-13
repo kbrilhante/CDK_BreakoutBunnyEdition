@@ -9,15 +9,19 @@ class Game {
         this.ball = "";
     }
     initialize() {
-        this.lives = 6;
+        this.lives = 2;
         this.level = 1;
         this.score = 0;
         this.reset();
     }
     reset() {
+        
+        this.blocks = this.buildBlocks(); 
+        
+        this.resetPaddleAndBall();
+    }
+    resetPaddleAndBall() {
         gameStart = false;
-
-        this.blocks = this.buildBlocks();
 
         const paddleX = width / 2;
         const paddleW = 100;
@@ -45,7 +49,7 @@ class Game {
         }
         const rowWidth = blocksWidth + (columns - 1) * gap;
         const offsetX = (w + width - rowWidth) / 2;
-        const offsetY = 100;
+        const offsetY = 120;
         for (let i = 0; i < rows; i++) {
             for (let j = 0; j < columns; j++) {
                 const x = (w + gap) * j + offsetX;
@@ -100,7 +104,7 @@ class Game {
     lostLife() {
         this.lives--;
         if (!this.checkGameOver()) {
-            this.reset();
+            this.resetPaddleAndBall();
         }
     }
     checkGameOver() {
@@ -109,7 +113,37 @@ class Game {
         }
         return gameOver;
     }
+    handleGameOver() {
+        this.initialize();
+        gameOver = false;
+    }
     drawStatus() {
-
+        let status = "";
+        status = "Hi-Score: " + this.hiScore;
+        this.writeStatus(status, width / 2, 30);
+        const col = 3;
+        for (let i = 0; i <= col; i++) {
+            switch (i) {
+                case 1:
+                    status = "Score: " + this.score;
+                    break;
+                case 2:
+                    status = "Level: " + this.level;
+                    break;
+                case 3:
+                    status = "Lives: " + this.lives
+                    break;
+            }
+            this.writeStatus(status, (width / col * i) - (width / col / 2), 70);
+        }
+    }
+    writeStatus(status, posX, posY) {
+        push();
+        fill("#fff");
+        textAlign(CENTER, CENTER);
+        textSize(20);
+        textFont("Impact");
+        text(status, posX, posY);
+        pop();
     }
 }
