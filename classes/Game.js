@@ -24,7 +24,7 @@ class Game {
         const paddleH = 15;
         const paddleY = height - paddleH / 2 - 10;
         this.paddle = new Paddle(paddleX, paddleY, paddleW, paddleH);
-        
+
         const ballR = 12;
         const ballY = paddleY - paddleH / 2 - ballR;
         this.ball = new Ball(paddleX, ballY, ballR);
@@ -59,6 +59,24 @@ class Game {
     startGame() {
         gameStart = true;
         this.ball.launch();
+    }
+    handleMovement() {
+        this.paddle.move();
+        this.paddle.display();
+        this.ball.move();
+        this.ball.display();
+        for (let i = 0; i < this.blocks.length; i++) {
+            const block = this.blocks[i];
+            block.display();
+        }
+        this.checkGameStatus();
+        if (!gameOver) {
+            if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
+                this.paddle.changeDirection(-1);
+            } else if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) {
+                this.paddle.changeDirection(1);
+            }
+        }
     }
     checkGameStatus() {
         if (gameStart && !gameOver) {
