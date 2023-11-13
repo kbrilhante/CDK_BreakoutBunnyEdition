@@ -28,18 +28,18 @@ function draw() {
         block.display();
     }
     game.checkGameStatus();
+    if (!gameOver) {
+        if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
+            game.paddle.changeDirection(-1);
+        } else if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) {
+            game.paddle.changeDirection(1);
+        }
+    }
 }
 
 function keyPressed() {
     if (keyCode === 32 && !gameStart && !gameOver) {
         game.startGame();
-    }
-    if (!gameOver) {
-        if (keyCode === LEFT_ARROW || keyCode === 65) {
-            game.paddle.changeDirection(-1);
-        } else if (keyCode === RIGHT_ARROW || keyCode === 68) {
-            game.paddle.changeDirection(1);
-        }
     }
 }
 

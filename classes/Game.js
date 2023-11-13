@@ -1,7 +1,7 @@
 class Game {
     constructor() {
-        this.lives = 1;
-        this.level = 1;
+        this.lives = 0;
+        this.level = 0;
         this.score = 0;
         this.hiScore = 0;
         this.blocks = [];
@@ -9,14 +9,14 @@ class Game {
         this.ball = "";
     }
     initialize() {
-        this.lives = 2;
+        this.lives = 6;
         this.level = 1;
         this.score = 0;
         this.reset();
     }
     reset() {
         gameStart = false;
-        
+
         this.blocks = this.buildBlocks();
 
         const paddleX = width / 2;

@@ -92,7 +92,12 @@ class Ball {
             const col = this.checkBlockCollision(b);
             if (col) {
                 game.blocks.splice(i, 1);
-                this.speed += 0.1;
+                game.score++;
+                if (game.score > game.hiScore) {
+                    game.hiScore = game.score;
+                }
+                console.log("score: " + game.score, "hiScore: " + game.hiScore);
+                this.speed += 0.2;
                 const br = atan2(b.h / 2, b.w / 2);
                 const bl = PI - br;
                 const tl = PI + br;
