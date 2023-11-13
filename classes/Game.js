@@ -9,7 +9,7 @@ class Game {
         this.ball = "";
     }
     initialize() {
-        this.lives = 2;
+        this.lives = 6;
         this.level = 1;
         this.score = 0;
         this.reset();
