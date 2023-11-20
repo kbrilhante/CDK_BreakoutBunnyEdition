@@ -1,5 +1,5 @@
-let game;
-let gameStart, gameOver;
+let startScreen, game;
+let gameStart, gameOver, hiScores;
 const colors = [
     "#FF0000",
     "#FFFF00",
@@ -9,31 +9,49 @@ const colors = [
     "#FF00FF"
 ];
 
+const gameModes = [
+    "Classic",
+    "Moving Blocks",
+    "Force Field"
+]
+
 function setup() {
     createCanvas(420, 560);
     gameStart = false;
     gameOver = false;
-    game = new Game();
-    game.initialize();
+    startScreen = new StartScreen();
+    inicializeHiScore();
 }
 
 function draw() {
     background(0);
-    game.drawStatus();
-    game.handleMovement();
+    if (game) {
+        game.drawStatus();
+        game.handleMovement();
+    }
 }
 
 function keyPressed() {
-    if (keyCode === 32 && !gameStart && !gameOver) {
+    if (keyCode === 32 && !gameStart && !gameOver && game) {
         game.startGame();
-    }
-    if (keyCode === 32 && gameOver) {
-        game.handleGameOver();
     }
 }
 
 function keyReleased() {
-    if (!gameOver) {
+    if (!gameOver && game) {
         game.paddle.changeDirection(0);
+    }
+}
+
+function inicializeHiScore() {
+    hiScores = [];
+    let hs = localStorage.getItem("hiScores");
+    if (hs) {
+        hs = hs.split(',');
+        for (let i = 0; i < hs.length; i++) {
+            hiScores.push(Number(hs[i]));
+        }
+    } else {
+        hiScores = [0,0,0];
     }
 }

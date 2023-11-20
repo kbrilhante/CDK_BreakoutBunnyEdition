@@ -1,9 +1,10 @@
 class Game {
-    constructor() {
+    constructor(gameMode) {
+        this.gameMode = gameMode
         this.lives = 0;
         this.level = 0;
         this.score = 0;
-        this.hiScore = 0;
+        this.hiScore = this.getHiScore();
         this.blocks = [];
         this.paddle = "";
         this.ball = "";
@@ -15,9 +16,8 @@ class Game {
         this.reset();
     }
     reset() {
-        
-        this.blocks = this.buildBlocks(); 
-        
+        this.blocks = this.buildBlocks();
+
         this.resetPaddleAndBall();
     }
     resetPaddleAndBall() {
@@ -26,7 +26,7 @@ class Game {
         const paddleX = width / 2;
         const paddleW = 100;
         const paddleH = 15;
-        const paddleY = height - paddleH / 2 - 10;
+        const paddleY = height - (paddleH * 2.5);
         this.paddle = new Paddle(paddleX, paddleY, paddleW, paddleH);
 
         const ballR = 12;
@@ -110,12 +110,13 @@ class Game {
     checkGameOver() {
         if (this.lives <= 0) {
             gameOver = true;
+            const i = gameModes.indexOf(this.gameMode);
+            hiScores[i] = this.hiScore;
+            localStorage.setItem("hiScores", hiScores);
+            game = "";
+            startScreen = new StartScreen();
         }
         return gameOver;
-    }
-    handleGameOver() {
-        this.initialize();
-        gameOver = false;
     }
     drawStatus() {
         let status = "";
@@ -145,5 +146,10 @@ class Game {
         textFont("Impact");
         text(status, posX, posY);
         pop();
+    }
+    getHiScore() {
+        const i = gameModes.indexOf(this.gameMode);
+        const hs = hiScores[i];
+        return hs;
     }
 }
