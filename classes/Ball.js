@@ -72,10 +72,6 @@ class Ball {
         if (this.y <= topWall) {
             this.dy *= -1;
         }
-        // TEMPORARY: just until we make it die
-        // if (this.y >= height - this.radius) {
-        //     this.dy *= -1;
-        // }
     }
     checkPaddleCollision() {
         const paddleT = game.paddle.y - game.paddle.h / 2;
@@ -112,7 +108,6 @@ class Ball {
                 if (game.score > game.hiScore) {
                     game.hiScore = game.score;
                 }
-                console.log("score: " + game.score, "hiScore: " + game.hiScore);
                 this.speed += 0.2;
                 const br = atan2(b.h / 2, b.w / 2);
                 const bl = PI - br;
@@ -140,17 +135,12 @@ class Ball {
         const blockB = block.y + block.h / 2;
         const blockL = block.x - block.w / 2;
         const blockR = block.x + block.w / 2;
-
         if (
             this.x + this.radius >= blockL &&
             this.x - this.radius <= blockR &&
             this.y + this.radius >= blockT &&
             this.y - this.radius <= blockB
         ) {
-            // if (this.x >= blockL && this.x <= blockR) {
-            //     return "v";
-            // }
-            // return "h";
             const x = abs(this.x - block.x);
             const y = abs(this.y - block.y);
             const a = atan2(y, x);
