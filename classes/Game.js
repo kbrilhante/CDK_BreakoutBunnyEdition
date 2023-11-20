@@ -54,7 +54,7 @@ class Game {
         for (let i = 0; i < rows; i++) {
             const gameModeIndex = gameModes.indexOf(this.gameMode);
             if (gameModeIndex === 1) {
-                dx = this.level;
+                dx = ceil(this.level / 4);
                 if (i % 2 === 0) {
                     dx *= -1;
                 }
