@@ -39,6 +39,21 @@ class Ball {
             this.checkWallCollision();
             this.checkPaddleCollision();
             this.checkAllBlocksCollision();
+            if (game.forceField) {
+                this.checkFFCollision();
+            }
+        }
+    }
+    checkFFCollision() {
+        const ff = game.forceField;
+        const top = ff.y - ff.h / 2;
+        if (
+            ff.str >= 0 &&
+            this.y + this.radius > top
+        ) {
+            this.y = game.paddle.y - this.radius
+            this.dy *= -1;
+            game.forceField.gotHit();
         }
     }
     checkWallCollision() {

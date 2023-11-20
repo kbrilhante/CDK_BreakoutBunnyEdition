@@ -10,7 +10,11 @@ class Game {
         this.ball = "";
     }
     initialize() {
-        this.lives = 6;
+        if (this.getGameModeIndex() === 2) {
+            this.lives = 1;
+        } else {
+            this.lives = 6;
+        }
         this.level = 1;
         this.score = 0;
         this.reset();
@@ -26,12 +30,17 @@ class Game {
         const paddleX = width / 2;
         const paddleW = 100;
         const paddleH = 15;
-        const paddleY = height - (paddleH * 2.5);
+        const paddleY = height - (paddleH * 2);
         this.paddle = new Paddle(paddleX, paddleY, paddleW, paddleH);
 
         const ballR = 12;
         const ballY = paddleY - paddleH / 2 - ballR;
         this.ball = new Ball(paddleX, ballY, ballR);
+
+        
+        if (this.getGameModeIndex() === 2) {
+            this.forceField = new ForceField(paddleX, height - paddleH / 2, width, paddleH);
+        }
     }
     buildBlocks() {
         const b = [];
@@ -52,8 +61,7 @@ class Game {
         const offsetY = 120;
         let dx = 0;
         for (let i = 0; i < rows; i++) {
-            const gameModeIndex = gameModes.indexOf(this.gameMode);
-            if (gameModeIndex === 1) {
+            if (this.getGameModeIndex() === 1) {
                 dx = 1 + floor(this.level / 2);
                 if (i % 2 === 0) {
                     dx *= -1;
@@ -77,6 +85,9 @@ class Game {
         this.paddle.display();
         this.ball.move();
         this.ball.display();
+        if (this.forceField) {
+            this.forceField.display();
+        }
         for (let i = 0; i < this.blocks.length; i++) {
             const block = this.blocks[i];
             block.display();
@@ -118,7 +129,7 @@ class Game {
     checkGameOver() {
         if (this.lives <= 0) {
             gameOver = true;
-            const i = gameModes.indexOf(this.gameMode);
+            const i = this.getGameModeIndex();
             hiScores[i] = this.hiScore;
             localStorage.setItem("hiScores", hiScores);
             game = "";
@@ -130,7 +141,10 @@ class Game {
         let status = "";
         status = "Hi-Score: " + this.hiScore;
         this.writeStatus(status, width / 2, 30);
-        const col = 3;
+        let col = 3;
+        if (this.getGameModeIndex() === 2) {
+            col = 2;
+        }
         for (let i = 0; i <= col; i++) {
             switch (i) {
                 case 1:
@@ -156,8 +170,11 @@ class Game {
         pop();
     }
     getHiScore() {
-        const i = gameModes.indexOf(this.gameMode);
+        const i = this.getGameModeIndex();
         const hs = hiScores[i];
         return hs;
+    }
+    getGameModeIndex() {
+        return gameModes.indexOf(this.gameMode);
     }
 }
