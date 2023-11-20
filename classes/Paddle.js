@@ -22,7 +22,11 @@ class Paddle {
     move() {
         const leftWall = this.w / 2;
         const rightWall = width - this.w / 2;
-        this.x += this.dx;
+        if (keyIsDown(SHIFT)) {
+            this.x += this.dx * 2;
+        } else {
+            this.x += this.dx;
+        }
         this.x = constrain(this.x, leftWall, rightWall);
     }
 }
