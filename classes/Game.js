@@ -50,11 +50,19 @@ class Game {
         const rowWidth = blocksWidth + (columns - 1) * gap;
         const offsetX = (w + width - rowWidth) / 2;
         const offsetY = 120;
+        let dx = 0;
         for (let i = 0; i < rows; i++) {
+            const gameModeIndex = gameModes.indexOf(this.gameMode);
+            if (gameModeIndex === 1) {
+                dx = this.level;
+                if (i % 2 === 0) {
+                    dx *= -1;
+                }
+            }
             for (let j = 0; j < columns; j++) {
                 const x = (w + gap) * j + offsetX;
                 const y = (h + gap) * i + offsetY;
-                const block = new Block(x, y, w, h, colors[i % colors.length]);
+                const block = new Block(x, y, w, h, colors[i % colors.length], dx);
                 b.push(block);
             }
         }
