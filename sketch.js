@@ -1,7 +1,7 @@
-let startScreen, game;
+let startScreen, game, soundControls;
 let gameStart, gameOver, hiScores;
 let sndTheme, sndWall, sndPaddle, sndBlock, sndLvlUp, sndBallLost, sndGameOver
-let muted, songOff, fxOff;
+let muted, musicOff, soundEffectsOff, volume;
 
 const colors = [
     "#FF0000",
@@ -34,8 +34,12 @@ function setup() {
     gameStart = false;
     gameOver = false;
     muted = false;
+    musicOff = false;
+    soundEffectsOff = false;
+    volume = 50;
     startScreen = new StartScreen();
     inicializeHiScore();
+    soundControls = new SoundControls();
 }
 
 function draw() {
@@ -44,6 +48,7 @@ function draw() {
         game.drawStatus();
         game.handleMovement();
     }
+    soundControls.setVolume();
 }
 
 function keyPressed() {
@@ -51,37 +56,13 @@ function keyPressed() {
         game.startGame();
     }
     if (keyCode === 77) {
-        if (muted) {
-            changeMusic(1);
-            changeSounds(1)
-            muted = false;
-            songOff = false;
-            fxOff = false;
-        } else {
-            changeMusic(0);
-            changeSounds(0)
-            muted = true;
-            songOff = true;
-            fxOff = true;
-        }
+        soundControls.toggleMute();
     }
     if (keyCode === 78) {
-        if (songOff) {
-            changeMusic(1);
-            songOff = false;
-        } else {
-            changeMusic(0);
-            songOff = true;
-        }
+        soundControls.toggleMusic();
     }
     if (keyCode === 66) {
-        if (fxOff) {
-            changeSounds(1);
-            fxOff = false;
-        } else {
-            changeSounds(0);
-            fxOff = true;
-        }
+        soundControls.toggleSound();
     }
 }
 
@@ -104,16 +85,16 @@ function inicializeHiScore() {
     }
 }
 
-function changeMusic(vol) {
-    sndTheme.setVolume(vol, 0.4);
-    sndGameOver.setVolume(vol, 0.4);
+function changeMusic(vol, fade) {
+    sndTheme.setVolume(vol, fade);
+    sndGameOver.setVolume(vol, fade);
 }
 
-function changeSounds(vol) {
-    sndWall.setVolume(vol, 0.4);
-    sndPaddle.setVolume(vol, 0.4);
-    sndBallLost.setVolume(vol, 0.4);
-    sndBlock.setVolume(vol, 0.4);
-    sndLvlUp.setVolume(vol, 0.4);
-    sndFf.setVolume(vol, 0.4);
+function changeSounds(vol, fade) {
+    sndWall.setVolume(vol, fade);
+    sndPaddle.setVolume(vol, fade);
+    sndBallLost.setVolume(vol, fade);
+    sndBlock.setVolume(vol, fade);
+    sndLvlUp.setVolume(vol, fade);
+    sndFf.setVolume(vol, fade);
 }
