@@ -14,7 +14,7 @@ class Game {
         if (this.getGameModeIndex() === 2) {
             this.lives = 1;
         } else {
-            this.lives = 2;
+            this.lives = 6;
         }
         this.level = 1;
         this.score = 0;
