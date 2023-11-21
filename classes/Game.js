@@ -10,6 +10,7 @@ class Game {
         this.ball = "";
     }
     initialize() {
+        sndTheme.play();
         if (this.getGameModeIndex() === 2) {
             this.lives = 1;
         } else {

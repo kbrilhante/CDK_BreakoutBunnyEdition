@@ -1,5 +1,8 @@
 let startScreen, game;
 let gameStart, gameOver, hiScores;
+let sndTheme, sndWall, sndPaddle, sndBrick, sndLvlUp, sndLifeLost, sndGameOver
+let muted;
+
 const colors = [
     "#FF0000",
     "#FFFF00",
@@ -13,12 +16,23 @@ const gameModes = [
     "Classic",
     "Moving Blocks",
     "Force Field"
-]
+];
+
+function preload() {
+    sndTheme = loadSound("./assets/retro.wav");
+    // sndWall
+    // sndPaddle
+    // sndBrick
+    // sndLvlUp
+    // sndLifeLost 
+    // sndGameOver
+}
 
 function setup() {
     createCanvas(420, 560);
     gameStart = false;
     gameOver = false;
+    muted = false;
     startScreen = new StartScreen();
     inicializeHiScore();
 }
@@ -34,6 +48,15 @@ function draw() {
 function keyPressed() {
     if (keyCode === 32 && !gameStart && !gameOver && game) {
         game.startGame();
+    }
+    if (keyCode === 77) {
+        if (muted) {
+            changeVolume(1);
+            muted = false;
+        } else {
+            changeVolume(0);
+            muted = true;
+        }
     }
 }
 
@@ -54,4 +77,8 @@ function inicializeHiScore() {
     } else {
         hiScores = [0,0,0];
     }
+}
+
+function changeVolume(vol) {
+    sndTheme.setVolume(vol, 0.4);
 }
