@@ -10,11 +10,11 @@ class Game {
         this.ball = "";
     }
     initialize() {
-        sndTheme.play();
+        sndTheme.loop();
         if (this.getGameModeIndex() === 2) {
             this.lives = 1;
         } else {
-            this.lives = 6;
+            this.lives = 2;
         }
         this.level = 1;
         this.score = 0;
@@ -118,11 +118,13 @@ class Game {
     checkNewLevel() {
         if (!this.blocks.length) {
             this.level++;
+            sndLvlUp.play();
             this.reset();
         }
     }
     lostLife() {
         this.lives--;
+        sndBallLost.play();
         if (!this.checkGameOver()) {
             this.resetPaddleAndBall();
         }
@@ -135,6 +137,8 @@ class Game {
             localStorage.setItem("hiScores", hiScores);
             game = "";
             startScreen = new StartScreen();
+            sndTheme.stop();
+            sndGameOver.play();
         }
         return gameOver;
     }

@@ -54,6 +54,7 @@ class Ball {
             this.y = game.paddle.y - this.radius
             this.dy *= -1;
             game.forceField.gotHit();
+            sndFf.play();
         }
     }
     checkWallCollision() {
@@ -97,6 +98,7 @@ class Ball {
                 this.angle = radians(181);
             }
             this.angleChanged();
+            sndPaddle.play();
         }
     }
     checkAllBlocksCollision() {
@@ -147,6 +149,7 @@ class Ball {
             const x = abs(this.x - block.x);
             const y = abs(this.y - block.y);
             const a = atan2(y, x);
+            sndBlock.play();
             return a;
         }
         return false;

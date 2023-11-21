@@ -1,7 +1,7 @@
 let startScreen, game;
 let gameStart, gameOver, hiScores;
-let sndTheme, sndWall, sndPaddle, sndBrick, sndLvlUp, sndLifeLost, sndGameOver
-let muted, songOff;
+let sndTheme, sndWall, sndPaddle, sndBlock, sndLvlUp, sndBallLost, sndGameOver
+let muted, songOff, fxOff;
 
 const colors = [
     "#FF0000",
@@ -20,12 +20,13 @@ const gameModes = [
 
 function preload() {
     sndTheme = loadSound("./assets/retro.wav");
-    sndWall = loadSound("./assets/Hit 2.wav")
-    // sndPaddle
-    // sndBrick
-    // sndLvlUp
-    // sndLifeLost 
-    // sndGameOver
+    sndWall = loadSound("./assets/Hit 2.wav");
+    sndPaddle = loadSound("./assets/Hit 4.wav");
+    sndFf = loadSound("./assets/Select 4.wav");
+    sndBlock = loadSound("./assets/Coin 2.wav");
+    sndLvlUp = loadSound("./assets/Powerup 1.wav");
+    sndBallLost = loadSound("./assets/Fly 3.wav");
+    sndGameOver = loadSound("./assets/GameOver.wav");
 }
 
 function setup() {
@@ -55,11 +56,13 @@ function keyPressed() {
             changeSounds(1)
             muted = false;
             songOff = false;
+            fxOff = false;
         } else {
             changeMusic(0);
             changeSounds(0)
             muted = true;
             songOff = true;
+            fxOff = true;
         }
     }
     if (keyCode === 78) {
@@ -69,6 +72,15 @@ function keyPressed() {
         } else {
             changeMusic(0);
             songOff = true;
+        }
+    }
+    if (keyCode === 66) {
+        if (fxOff) {
+            changeSounds(1);
+            fxOff = false;
+        } else {
+            changeSounds(0);
+            fxOff = true;
         }
     }
 }
@@ -94,8 +106,14 @@ function inicializeHiScore() {
 
 function changeMusic(vol) {
     sndTheme.setVolume(vol, 0.4);
+    sndGameOver.setVolume(vol, 0.4);
 }
 
 function changeSounds(vol) {
     sndWall.setVolume(vol, 0.4);
+    sndPaddle.setVolume(vol, 0.4);
+    sndBallLost.setVolume(vol, 0.4);
+    sndBlock.setVolume(vol, 0.4);
+    sndLvlUp.setVolume(vol, 0.4);
+    sndFf.setVolume(vol, 0.4);
 }
