@@ -64,13 +64,16 @@ class Ball {
         if (this.x <= leftWall) {
             this.dx *= -1;
             this.x = this.radius;
+            sndWall.play();
         }
         if (this.x >= rightWall) {
             this.dx *= -1;
             this.x = width - this.radius;
+            sndWall.play();
         }
         if (this.y <= topWall) {
             this.dy *= -1;
+            sndWall.play();
         }
     }
     checkPaddleCollision() {

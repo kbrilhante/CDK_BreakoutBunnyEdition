@@ -1,7 +1,7 @@
 let startScreen, game;
 let gameStart, gameOver, hiScores;
 let sndTheme, sndWall, sndPaddle, sndBrick, sndLvlUp, sndLifeLost, sndGameOver
-let muted;
+let muted, songOff;
 
 const colors = [
     "#FF0000",
@@ -20,7 +20,7 @@ const gameModes = [
 
 function preload() {
     sndTheme = loadSound("./assets/retro.wav");
-    // sndWall
+    sndWall = loadSound("./assets/Hit 2.wav")
     // sndPaddle
     // sndBrick
     // sndLvlUp
@@ -51,11 +51,24 @@ function keyPressed() {
     }
     if (keyCode === 77) {
         if (muted) {
-            changeVolume(1);
+            changeMusic(1);
+            changeSounds(1)
             muted = false;
+            songOff = false;
         } else {
-            changeVolume(0);
+            changeMusic(0);
+            changeSounds(0)
             muted = true;
+            songOff = true;
+        }
+    }
+    if (keyCode === 78) {
+        if (songOff) {
+            changeMusic(1);
+            songOff = false;
+        } else {
+            changeMusic(0);
+            songOff = true;
         }
     }
 }
@@ -79,6 +92,10 @@ function inicializeHiScore() {
     }
 }
 
-function changeVolume(vol) {
+function changeMusic(vol) {
     sndTheme.setVolume(vol, 0.4);
+}
+
+function changeSounds(vol) {
+    sndWall.setVolume(vol, 0.4);
 }
